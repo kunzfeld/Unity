@@ -37,7 +37,7 @@ void UnityMalloc_EndTest(void);
 int UnityGetCommandLineOptions(int argc, const char* argv[]);
 void UnityConcludeFixtureTest(void);
 
-void UnityPointer_Set(void** pointer, void* newValue, UNITY_LINE_TYPE line);
+void UnityPointer_Set(void** pointer, void* newValue, const char *file, UNITY_LINE_TYPE line);
 void UnityPointer_UndoAllSets(void);
 void UnityPointer_Init(void);
 #ifndef UNITY_MAX_POINTERS

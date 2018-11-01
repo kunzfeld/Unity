@@ -148,7 +148,7 @@ void UnityMalloc_EndTest(void)
     malloc_fail_countdown = MALLOC_DONT_FAIL;
     if (malloc_count != 0)
     {
-        UNITY_TEST_FAIL(Unity.CurrentTestLineNumber, "This test leaks!");
+        UNITY_TEST_FAIL(Unity.TestFile, Unity.CurrentTestLineNumber, "This test leaks!");
     }
 }
 
@@ -255,7 +255,7 @@ void unity_free(void* mem)
     release_memory(mem);
     if (overrun)
     {
-        UNITY_TEST_FAIL(Unity.CurrentTestLineNumber, "Buffer overrun detected during free()");
+        UNITY_TEST_FAIL(Unity.TestFile, Unity.CurrentTestLineNumber, "Buffer overrun detected during free()");
     }
 }
 
@@ -278,7 +278,7 @@ void* unity_realloc(void* oldMem, size_t size)
     if (isOverrun(oldMem))
     {
         release_memory(oldMem);
-        UNITY_TEST_FAIL(Unity.CurrentTestLineNumber, "Buffer overrun detected during realloc()");
+        UNITY_TEST_FAIL(Unity.TestFile, Unity.CurrentTestLineNumber, "Buffer overrun detected during realloc()");
     }
 
     if (size == 0)
@@ -321,11 +321,11 @@ void UnityPointer_Init(void)
     pointer_index = 0;
 }
 
-void UnityPointer_Set(void** pointer, void* newValue, UNITY_LINE_TYPE line)
+void UnityPointer_Set(void** pointer, void* newValue, const char *file, UNITY_LINE_TYPE line)
 {
     if (pointer_index >= UNITY_MAX_POINTERS)
     {
-        UNITY_TEST_FAIL(line, "Too many pointers set");
+        UNITY_TEST_FAIL(file, line, "Too many pointers set");
     }
     else
     {
